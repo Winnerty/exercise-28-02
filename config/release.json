@@ -1,0 +1,5 @@
+{
+    "dbURI": "mongodb://localhost:27017/releaseDB",
+    "port": 4000
+  }
+  
