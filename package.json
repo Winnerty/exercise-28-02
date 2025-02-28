@@ -3,15 +3,22 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "cross-env NODE_ENV=dev node app.js",
+    "start:release": "cross-env NODE_ENV=release node app.js",
+    "start:prod": "cross-env NODE_ENV=prod node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "config": "^3.3.12",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.11.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

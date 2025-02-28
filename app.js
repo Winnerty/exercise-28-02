@@ -1,20 +1,26 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const config = require('config');
+const express = require("express");
+const mongoose = require("mongoose");
 
 const app = express();
-const port = config.get('port');
-const dbURI = config.get('dbURI');
+app.use(express.json()); 
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log(`Подключено к MongoDB: ${dbURI}`))
-  .catch(err => console.error('Ошибка подключения к MongoDB:', err));
+mongoose.connect("mongodb://localhost:27017/devDB")
+    .then(() => console.log("connected to MongoDB"))
+    .catch(err => console.error("connection error:", err));
 
-app.use(express.json());
-
-const userRoutes = require('./routes/userRoutes');
-app.use('/api', userRoutes);
-
-app.listen(port, () => {
-  console.log(`Сервер запущен на порту ${port}`);
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String
 });
+const User = mongoose.model("User", userSchema);
+
+app.get("/users", async (req, res) => {
+    try {
+        const users = await User.find(); 
+        res.json(users); 
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.listen(3000, () => console.log("server runs on the port 3000"));
